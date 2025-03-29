@@ -25,7 +25,7 @@ struct AddProductView: View {
                 .keyboardType(.decimalPad)
             TextField("Provider", text: $provider)
 
-            Button("Save Product") {
+            Button("Save Product") {//
                 let newProduct = Product(context: viewContext)
                 newProduct.id = UUID()
                 newProduct.name = name
