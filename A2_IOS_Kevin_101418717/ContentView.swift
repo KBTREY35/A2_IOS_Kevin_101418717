@@ -19,7 +19,7 @@ struct ContentView: View {
     @State private var currentIndex: Int = 0
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 20) { //
             if !products.isEmpty {//
                 let product = products[currentIndex]
                 Text(product.name ?? "")
