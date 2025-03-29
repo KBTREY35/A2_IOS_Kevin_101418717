@@ -46,7 +46,7 @@ struct ContentView: View {
         }
         .padding()
         .onAppear {
-            seedInitialProductsIfNeeded()
+            seedInitialProductsIfNeeded()//
         }
         .navigationTitle("Product Viewer")
     }
