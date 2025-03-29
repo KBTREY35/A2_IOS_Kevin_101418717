@@ -20,7 +20,7 @@ struct ProductListView: View {
                 Text(product.desc ?? "")
             }
         }
-        .navigationTitle("All Products")
+        .navigationTitle("All Products") //title
     }
 }
 
