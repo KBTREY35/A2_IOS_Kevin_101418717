@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(
+    @FetchRequest(//
         entity: Product.entity(),
         sortDescriptors: []
     ) var products: FetchedResults<Product>
