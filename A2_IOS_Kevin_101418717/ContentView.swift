@@ -7,11 +7,11 @@
 
 import SwiftUI
 import CoreData
-//
+
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(//
+    @FetchRequest(
         entity: Product.entity(),
         sortDescriptors: []
     ) var products: FetchedResults<Product>
@@ -19,34 +19,34 @@ struct ContentView: View {
     @State private var currentIndex: Int = 0
 
     var body: some View {
-        VStack(spacing: 20) { //
-            if !products.isEmpty {//
+        VStack(spacing: 20) {
+            if !products.isEmpty {
                 let product = products[currentIndex]
                 Text(product.name ?? "")
                     .font(.title)
                 Text(product.desc ?? "")
-                Text("Price: $\(product.price, specifier: "%.2f")")//
-                Text("Provider: \(product.provider ?? "")")//
+                Text("Price: $\(product.price, specifier: "%.2f")")
+                Text("Provider: \(product.provider ?? "")")
                 
-                HStack {//
+                HStack {
                     Button("Previous") {//
-                        if currentIndex > 0 { currentIndex -= 1 }//
+                        if currentIndex > 0 { currentIndex -= 1 }
                     }
                     Button("Next") {
-                        if currentIndex < products.count - 1 { currentIndex += 1 }//
+                        if currentIndex < products.count - 1 { currentIndex += 1 }
                     }
                 }
             } else {
                 Text("No products found.")
             }
 
-            NavigationLink("Search Product", destination: SearchView())//
-            NavigationLink("Add New Product", destination: AddProductView())//
-            NavigationLink("View All Products", destination: ProductListView())//
+            NavigationLink("Search Product", destination: SearchView())
+            NavigationLink("Add New Product", destination: AddProductView())
+            NavigationLink("View All Products", destination: ProductListView())
         }
         .padding()
         .onAppear {
-            seedInitialProductsIfNeeded()//
+            seedInitialProductsIfNeeded()
         }
         .navigationTitle("Product Viewer")
     }
@@ -60,7 +60,7 @@ struct ContentView: View {
                 product.id = UUID()
                 product.name = "Product \(i)"
                 product.desc = "Description for product \(i)"
-                product.price = Double(i) * 9.99 //
+                product.price = Double(i) * 9.99 
                 product.provider = "Provider \(i)"
             }
             try? viewContext.save()
