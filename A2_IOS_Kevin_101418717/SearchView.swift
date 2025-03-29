@@ -34,7 +34,7 @@ struct SearchView: View {
             }
         }
         .padding()
-        .navigationTitle("Search Products")
+        .navigationTitle("Search Products") //
     }
 }
 
