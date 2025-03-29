@@ -40,9 +40,9 @@ struct ContentView: View {
                 Text("No products found.")
             }
 
-            NavigationLink("Search Product", destination: SearchView())
-            NavigationLink("Add New Product", destination: AddProductView())
-            NavigationLink("View All Products", destination: ProductListView())
+            NavigationLink("Search Product", destination: SearchView())//
+            NavigationLink("Add New Product", destination: AddProductView())//
+            NavigationLink("View All Products", destination: ProductListView())//
         }
         .padding()
         .onAppear {
