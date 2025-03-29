@@ -22,7 +22,7 @@ struct SearchView: View {
 
             Button("Search") {
                 let request: NSFetchRequest<Product> = Product.fetchRequest()
-                request.predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR desc CONTAINS[cd] %@", searchText, searchText)
+                request.predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR desc CONTAINS[cd] %@", searchText, searchText)//
                 results = (try? context.fetch(request)) ?? []
             }
 
