@@ -28,12 +28,12 @@ struct ContentView: View {
                 Text("Price: $\(product.price, specifier: "%.2f")")
                 Text("Provider: \(product.provider ?? "")")
                 
-                HStack {
-                    Button("Previous") {
-                        if currentIndex > 0 { currentIndex -= 1 }
+                HStack {//
+                    Button("Previous") {//
+                        if currentIndex > 0 { currentIndex -= 1 }//
                     }
                     Button("Next") {
-                        if currentIndex < products.count - 1 { currentIndex += 1 }
+                        if currentIndex < products.count - 1 { currentIndex += 1 }//
                     }
                 }
             } else {
