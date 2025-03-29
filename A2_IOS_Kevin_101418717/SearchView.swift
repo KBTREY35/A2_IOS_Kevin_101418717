@@ -24,7 +24,7 @@ struct SearchView: View {
                 let request: NSFetchRequest<Product> = Product.fetchRequest()
                 request.predicate = NSPredicate(format: "name CONTAINS[cd] %@ OR desc CONTAINS[cd] %@", searchText, searchText)//
                 results = (try? context.fetch(request)) ?? []
-            }
+            }//
 
             List(results, id: \.self) { product in
                 VStack(alignment: .leading) {
