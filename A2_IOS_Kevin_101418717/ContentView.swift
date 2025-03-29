@@ -25,8 +25,8 @@ struct ContentView: View {
                 Text(product.name ?? "")
                     .font(.title)
                 Text(product.desc ?? "")
-                Text("Price: $\(product.price, specifier: "%.2f")")
-                Text("Provider: \(product.provider ?? "")")
+                Text("Price: $\(product.price, specifier: "%.2f")")//
+                Text("Provider: \(product.provider ?? "")")//
                 
                 HStack {//
                     Button("Previous") {//
