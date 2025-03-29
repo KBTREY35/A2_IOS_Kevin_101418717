@@ -60,7 +60,7 @@ struct ContentView: View {
                 product.id = UUID()
                 product.name = "Product \(i)"
                 product.desc = "Description for product \(i)"
-                product.price = Double(i) * 9.99
+                product.price = Double(i) * 9.99 //
                 product.provider = "Provider \(i)"
             }
             try? viewContext.save()
