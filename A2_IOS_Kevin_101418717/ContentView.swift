@@ -10,77 +10,62 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+        entity: Product.entity(),
+        sortDescriptors: []
+    ) var products: FetchedResults<Product>
+    
+    @State private var currentIndex: Int = 0
 
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+        VStack(spacing: 20) {
+            if !products.isEmpty {
+                let product = products[currentIndex]
+                Text(product.name ?? "")
+                    .font(.title)
+                Text(product.desc ?? "")
+                Text("Price: $\(product.price, specifier: "%.2f")")
+                Text("Provider: \(product.provider ?? "")")
+                
+                HStack {
+                    Button("Previous") {
+                        if currentIndex > 0 { currentIndex -= 1 }
+                    }
+                    Button("Next") {
+                        if currentIndex < products.count - 1 { currentIndex += 1 }
                     }
                 }
-                .onDelete(perform: deleteItems)
+            } else {
+                Text("No products found.")
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
+
+            NavigationLink("Search Product", destination: SearchView())
+            NavigationLink("Add New Product", destination: AddProductView())
+            NavigationLink("View All Products", destination: ProductListView())
         }
+        .padding()
+        .onAppear {
+            seedInitialProductsIfNeeded()
+        }
+        .navigationTitle("Product Viewer")
     }
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+    func seedInitialProductsIfNeeded() {
+        let fetchRequest: NSFetchRequest<Product> = Product.fetchRequest()
+        let count = (try? viewContext.count(for: fetchRequest)) ?? 0
+        if count == 0 {
+            for i in 1...10 {
+                let product = Product(context: viewContext)
+                product.id = UUID()
+                product.name = "Product \(i)"
+                product.desc = "Description for product \(i)"
+                product.price = Double(i) * 9.99
+                product.provider = "Provider \(i)"
             }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            try? viewContext.save()
         }
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
-#Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-}
