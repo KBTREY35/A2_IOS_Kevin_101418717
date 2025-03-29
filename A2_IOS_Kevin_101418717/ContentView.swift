@@ -20,7 +20,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            if !products.isEmpty {
+            if !products.isEmpty {//
                 let product = products[currentIndex]
                 Text(product.name ?? "")
                     .font(.title)
